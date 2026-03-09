@@ -118,8 +118,8 @@ if (issues.length === 0) {
 //all tab filtering
 function filterIssues(type) {
   currentFilter = type;
-  const baseClass = 'bg-white text-gray-600 px-5 py-2 w-24 rounded text-sm font-semibold border border-gray-200 hover:bg-gray-50 transition-all';
-  const activeClass = 'tab-active px-5 py-2 w-24 rounded text-sm font-semibold transition-all';
+  const baseClass = 'bg-white text-gray-600 px-5 py-2 w-24 rounded text-sm font-semibold border border-gray-200 hover:bg-gray-50';
+  const activeClass = 'tab-active px-5 py-2 w-24 rounded text-sm font-semibold';
 
   ['tabAll', 'tabOpen', 'tabClosed'].forEach(id => {
     document.getElementById(id).className = baseClass;
