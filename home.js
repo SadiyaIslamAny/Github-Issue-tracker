@@ -114,3 +114,85 @@ if (issues.length === 0) {
     `;
   }).join('');
 };
+
+//all tab filtering
+function filterIssues(type) {
+  currentFilter = type;
+  const baseClass = 'bg-white text-gray-600 px-5 py-2 w-24 rounded text-sm font-semibold border border-gray-200 hover:bg-gray-50 transition-all';
+  const activeClass = 'tab-active px-5 py-2 w-24 rounded text-sm font-semibold transition-all';
+
+  ['tabAll', 'tabOpen', 'tabClosed'].forEach(id => {
+    document.getElementById(id).className = baseClass;
+  });
+  const activeMap = { all: 'tabAll', open: 'tabOpen', closed: 'tabClosed' };
+  document.getElementById(activeMap[type]).className = activeClass;
+
+  const filtered = type === 'all' ? allIssues : allIssues.filter(i => i.status?.toLowerCase() === type);
+  renderIssues(filtered);
+};
+
+// Open modal with issue details
+async function openModal(id) {
+  const modal = document.getElementById('issueModal');
+  document.getElementById('modalLoader').classList.remove('hidden');
+  document.getElementById('modalContent').classList.add('hidden');
+  modal.showModal();
+
+  try {
+    const res = await fetch(`${apiSingle}/${id}`);
+    const data = await res.json();
+    const issue = data.data || data;
+
+    document.getElementById('modalTitle').textContent = issue.title || 'No Title';
+    const isOpen = issue.status?.toLowerCase() === 'open';
+    const statusEl = document.getElementById('modalStatus');
+    statusEl.textContent = isOpen ? 'Opened' : 'Closed';
+    statusEl.className = `badge px-3 py-1 rounded-full text-xs font-semibold text-white ${isOpen ? 'badge-success' : 'badge-secondary'}`;
+    document.getElementById('modalAuthor').textContent = `Opened by ${issue.author || 'unknown'}`;
+    document.getElementById('modalDate').textContent = formatDate(issue.created_at || issue.createdAt);
+    document.getElementById('modalDescription').textContent = issue.description || '';
+    document.getElementById('modalAssignee').textContent = issue.assignee || issue.author || 'N/A';
+    const priorityEl = document.getElementById('modalPriority');
+    priorityEl.textContent = issue.priority?.toUpperCase() || 'N/A';
+    priorityEl.className = `badge px-3 py-1 text-xs font-bold ${getPriorityClass(issue.priority)}`;
+
+    const labels = Array.isArray(issue.labels) ? issue.labels : issue.label ? [issue.label] : [];
+    document.getElementById('modalLabels').innerHTML = labels.map(l => `<span class="text-xs px-2 py-1 rounded-full font-semibold ${getLabelClass(l)}">${getLabelIcon(l)} ${l}</span>`).join('');
+
+    document.getElementById('modalLoader').classList.add('hidden');
+    document.getElementById('modalContent').classList.remove('hidden');
+
+  } catch (err) {
+    console.error('Error fetching issue details:', err);
+  }
+};
+
+// Search issues
+async function doSearch() {
+  const q = document.getElementById('searchInput').value.trim();
+  if (!q) {
+    renderIssues(allIssues);
+    return;
+  }
+  showLoader(true);
+  try {
+    const res = await fetch(apiSearch + encodeURIComponent(q));
+    const data = await res.json();
+    const results = data.data || data || [];
+    renderIssues(results);
+  } catch (err) {
+    console.error('Search error:', err);
+  } finally {
+    showLoader(false);
+  }
+};
+
+// Add event listeners
+document.getElementById('searchBtn').addEventListener('click', doSearch);
+document.getElementById('searchInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter') doSearch();
+});
+
+// Initial fetch on page load
+fetchIssues();
+
