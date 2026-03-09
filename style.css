@@ -1,0 +1,51 @@
+ *{
+     font-family: "Geist", sans-serif;
+    }
+ 
+ .card-open {
+      border-top: 4px solid #00A96E;
+    }
+
+    .card-closed {
+      border-top: 4px solid #7C3AED;
+    }
+
+    .tab-active {
+      background-color: #4A00FF;
+      color: white;
+    }
+
+    .priority-high {
+      background-color: #FEE2E2;
+      color: #EF4444;
+    }
+
+    .priority-medium {
+      background-color: #FEF9C3;
+      color: #CA8A04;
+    }
+
+    .priority-low {
+      background-color: #EEEFF2;
+      color: #9CA3AF;
+    }
+
+    .label-bug {
+      background-color: #FEE2E2;
+      color: #DC2626;
+    }
+
+    .label-enhancement {
+      background-color: #DCFCE7;
+      color: #16A34A;
+    }
+
+    .label-help {
+      background-color: #FEF9C3;
+      color: #CA8A04;
+    }
+
+    .label-default {
+      background-color: #E0E7FF;
+      color: #4338CA;
+    }
