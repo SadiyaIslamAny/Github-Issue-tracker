@@ -19,7 +19,38 @@
      <!-- style -->
       <link rel="stylesheet" href="./style.css">
 </head>
-<body>
+<body class= "bg-[#F8FAFC] min-h-screen">
+<div class="bg-white border border-[#E9E9E9]"> 
+
+    <!-- navbar section-->
+  <section class=" flex justify-between items-center px-[80px] py-4">
+    <!-- logo -->
+     
+     <div class="flex justify-start items-center gap-2">
+      <img src="./assets/github-logo.png" alt="github-logo" class="w-[36px]">
+      <h2 class="text-xl font-semibold">GitHub Issues Tracker</h2>
+      </div>
+
+        <!-- search input -->
+   <div class="flex items-center gap-2">
+    <label class="input rounded-md border border-gray-300 px-3 py-2
+            focus-within:ring-2 focus-within:ring-purple-500 focus-within:border-purple-500 outline-none">
+     <svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    
+        <g stroke-linejoin="round" stroke-linecap="round" stroke-width="2.5" fill="none" stroke="currentColor">
+      <circle cx="11" cy="11" r="8"></circle>
+      <path d="m21 21-4.3-4.3"></path>
+       </g>
+     </svg>
+      <input id="searchInput" type="search" required placeholder="Search" />
+   </label>
+   <!-- search button -->
+     <button id="searchBtn" class="btn btn-primary text-[#FFFFFF]">
+      <span>Search</span>
+     </button>
+    </div>
+  </section>
+</div>
 
 </body>
 
